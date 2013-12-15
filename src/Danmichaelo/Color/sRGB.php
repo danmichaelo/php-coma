@@ -6,11 +6,15 @@ class sRGB
 	public $g;
 	public $b;
 
-	function __construct($r, $g, $b)
+	function __construct($r, $g = null, $b = null)
 	{
-		$this->r = $r;
-		$this->g = $g;
-		$this->b = $b;
+		if (is_null($g) && is_null($b)) {
+			$this->fromHex($r);
+		} else {
+			$this->r = $r;
+			$this->g = $g;
+			$this->b = $b;
+		}
 	}
 
 	protected function pivot($n)
@@ -49,6 +53,33 @@ class sRGB
 
 		// Forward transform from XYZ to CIE LAB
 		return $xyz->toLab();
+	}
+
+	public function toHex()
+	{
+		$hex = '#';
+		$hex .= strtoupper(str_pad(dechex($this->r), 2, '0', STR_PAD_LEFT));
+		$hex .= strtoupper(str_pad(dechex($this->g), 2, '0', STR_PAD_LEFT));
+		$hex .= strtoupper(str_pad(dechex($this->b), 2, '0', STR_PAD_LEFT));
+		return $hex;
+	}
+
+	protected function fromHex($hex) {
+		$hex = str_replace('#', '', $hex);
+
+		if (strlen($hex) == 3) {
+			$this->r = hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+			$this->g = hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+			$this->b = hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
+
+		} else if (strlen($hex) == 6) {
+			$this->r = hexdec(substr($hex, 0, 2));
+			$this->g = hexdec(substr($hex, 2, 2));
+			$this->b = hexdec(substr($hex, 4, 2));
+
+		} else {
+			throw new Exception('Invalid hex color code length');
+		}
 	}
 
 }
