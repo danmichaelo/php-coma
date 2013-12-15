@@ -1,0 +1,28 @@
+{
+    "name": "danmichaelo/colordistance",
+    "type": "library",
+    "description": "Calculate various color distance metrics",
+    "homepage": "http://github.com/danmichaelo/colordistance",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dan Michael O. Heggø",
+            "email": "danmichaelo@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3",
+        "ext-gd": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.8.*",
+        "mockery/mockery": "dev-master",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-0": {
+            "Danmichaelo\\Color\\": "src/"
+        }
+    }
+}
