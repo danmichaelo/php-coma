@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Color;
+<?php namespace Danmichaelo\Coma;
 
 class Lab
 {

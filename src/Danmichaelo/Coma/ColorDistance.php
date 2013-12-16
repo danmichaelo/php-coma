@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Color;
+<?php namespace Danmichaelo\Coma;
 
 /**
  * References used:
@@ -20,6 +20,7 @@ class ColorDistance {
 			return $color->toLab();
 		}
 		throw new \Exception('color of unknown class');
+		// Finnes det noe ala InvalidArgumentException?
 	}
 
 	/**

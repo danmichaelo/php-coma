@@ -1,8 +1,8 @@
 {
-    "name": "danmichaelo/colordistance",
+    "name": "danmichaelo/coma",
     "type": "library",
-    "description": "Calculate various color distance metrics",
-    "homepage": "http://github.com/danmichaelo/colordistance",
+    "description": "Color library to convert between RGB, XYZ, and Lab colorspaces, and calculate color distance metrics such as CIE76 and CIE94",
+    "homepage": "http://github.com/danmichaelo/php-coma",
     "license": "MIT",
     "authors": [
         {
@@ -22,7 +22,7 @@
     },
     "autoload": {
         "psr-0": {
-            "Danmichaelo\\Color\\": "src/"
+            "Danmichaelo\\Coma\\": "src/"
         }
     }
 }

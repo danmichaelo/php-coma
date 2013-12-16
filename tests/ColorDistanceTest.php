@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Color;
+<?php namespace Danmichaelo\Coma;
 
 class ColorDistanceTest extends \PHPUnit_Framework_TestCase {
 
@@ -49,4 +49,12 @@ class ColorDistanceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(0.0, $cie94, '', 0.0001);
 		$this->assertEquals(0.0, $simpl, '', 0.0001);
 	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testInvalidArgument() {
+		$this->cd->cie94(1, 2);
+	}
+
 }

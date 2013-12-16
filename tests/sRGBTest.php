@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Color;
+<?php namespace Danmichaelo\Coma;
 
 class sRGBTest extends \PHPUnit_Framework_TestCase {
 
@@ -19,9 +19,23 @@ class sRGBTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @expectedException Exception
 	 */
-	public function testWrongLength() {
+	public function testInvalidHexColor1() {
 		$hex = '#2222';
 		$c = new sRGB($hex);
 	}
 
+
+	public function testInvalidHexColor2() {
+		$hex = '#HHHHHH';
+		$c = new sRGB($hex);
+
+		$this->assertEquals('#000000', $c->toHex());
+	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testInvalidHexColor3() {
+		$c = new sRGB(300, 300, 300);
+	}
 }

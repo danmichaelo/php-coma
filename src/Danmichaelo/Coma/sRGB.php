@@ -1,4 +1,4 @@
-<?php namespace Danmichaelo\Color;
+<?php namespace Danmichaelo\Coma;
 
 class sRGB
 {
@@ -11,6 +11,9 @@ class sRGB
 		if (is_null($g) && is_null($b)) {
 			$this->fromHex($r);
 		} else {
+			if (!is_numeric($r) || $r < 0 || $r > 255) throw new \Exception('red out of range');
+			if (!is_numeric($g) || $g < 0 || $g > 255) throw new \Exception('green out of range');
+			if (!is_numeric($b) || $b < 0 || $b > 255) throw new \Exception('blue out of range');
 			$this->r = $r;
 			$this->g = $g;
 			$this->b = $b;
