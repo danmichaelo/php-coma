@@ -19,7 +19,7 @@ class ColorDistance {
 		if ($color instanceof sRGB) {
 			return $color->toLab();
 		}
-		throw new Exception('color of unknown class');
+		throw new \Exception('color of unknown class');
 	}
 
 	/**

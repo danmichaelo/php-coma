@@ -78,7 +78,7 @@ class sRGB
 			$this->b = hexdec(substr($hex, 4, 2));
 
 		} else {
-			throw new Exception('Invalid hex color code length');
+			throw new \Exception('Invalid hex color code length');
 		}
 	}
 

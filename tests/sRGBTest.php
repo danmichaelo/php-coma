@@ -9,4 +9,19 @@ class sRGBTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($hex, $c->toHex());
 	}
 
+	public function testShortHex() {
+		$hex = '#222';
+		$c = new sRGB($hex);
+
+		$this->assertEquals('#222222', $c->toHex());
+	}
+
+	/**
+	 * @expectedException Exception
+	 */
+	public function testWrongLength() {
+		$hex = '#2222';
+		$c = new sRGB($hex);
+	}
+
 }
