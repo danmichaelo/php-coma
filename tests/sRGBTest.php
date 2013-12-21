@@ -38,4 +38,12 @@ class sRGBTest extends \PHPUnit_Framework_TestCase {
 	public function testInvalidHexColor3() {
 		$c = new sRGB(300, 300, 300);
 	}
+
+	public function testInverse() {
+		$hex = '#874291';
+		$c = new sRGB($hex);
+
+		$this->assertEquals('#78BD6E', $c->inverse()->toHex());
+		$this->assertEquals($hex, $c->toHex()); // original object should not be altered!
+	}
 }

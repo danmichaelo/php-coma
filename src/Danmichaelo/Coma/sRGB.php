@@ -2,8 +2,19 @@
 
 class sRGB
 {
+	/**
+	 * Red value in range 0,255
+	 */
 	public $r;
+
+	/**
+	 * Green value in range 0,255
+	 */
 	public $g;
+
+	/**
+	 * Blue value in range 0,255
+	 */
 	public $b;
 
 	function __construct($r, $g = null, $b = null)
@@ -83,6 +94,14 @@ class sRGB
 		} else {
 			throw new \Exception('Invalid hex color code length');
 		}
+	}
+
+	/**
+	 * Returns the inverse of the current color
+	 */
+	public function inverse()
+	{
+		return new sRGB(255 - $this->r, 255 - $this->g, 255 - $this->b);
 	}
 
 }
