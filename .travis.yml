@@ -12,7 +12,6 @@ matrix:
      - php: hhvm
 
 before_script:
- - echo 'date.timezone = "UTC"' >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini
  - composer install --dev -o -n
 
 script:
