@@ -1,49 +1,56 @@
-<?php namespace Danmichaelo\Coma;
+<?php
 
-class sRGBTest extends \PHPUnit_Framework_TestCase {
+namespace Danmichaelo\Coma;
 
-	public function testFromToHex() {
-		$hex = '#234567';
-		$c = new sRGB($hex);
+class sRGBTest extends \PHPUnit_Framework_TestCase
+{
+    public function testFromToHex()
+    {
+        $hex = '#234567';
+        $c = new sRGB($hex);
 
-		$this->assertEquals($hex, $c->toHex());
-	}
+        $this->assertEquals($hex, $c->toHex());
+    }
 
-	public function testShortHex() {
-		$hex = '#222';
-		$c = new sRGB($hex);
+    public function testShortHex()
+    {
+        $hex = '#222';
+        $c = new sRGB($hex);
 
-		$this->assertEquals('#222222', $c->toHex());
-	}
+        $this->assertEquals('#222222', $c->toHex());
+    }
 
-	/**
-	 * @expectedException Exception
-	 */
-	public function testInvalidHexColor1() {
-		$hex = '#2222';
-		$c = new sRGB($hex);
-	}
+    /**
+     * @expectedException Exception
+     */
+    public function testInvalidHexColor1()
+    {
+        $hex = '#2222';
+        $c = new sRGB($hex);
+    }
 
+    public function testInvalidHexColor2()
+    {
+        $hex = '#HHHHHH';
+        $c = new sRGB($hex);
 
-	public function testInvalidHexColor2() {
-		$hex = '#HHHHHH';
-		$c = new sRGB($hex);
+        $this->assertEquals('#000000', $c->toHex());
+    }
 
-		$this->assertEquals('#000000', $c->toHex());
-	}
+    /**
+     * @expectedException Exception
+     */
+    public function testInvalidHexColor3()
+    {
+        $c = new sRGB(300, 300, 300);
+    }
 
-	/**
-	 * @expectedException Exception
-	 */
-	public function testInvalidHexColor3() {
-		$c = new sRGB(300, 300, 300);
-	}
+    public function testInverse()
+    {
+        $hex = '#874291';
+        $c = new sRGB($hex);
 
-	public function testInverse() {
-		$hex = '#874291';
-		$c = new sRGB($hex);
-
-		$this->assertEquals('#78BD6E', $c->inverse()->toHex());
-		$this->assertEquals($hex, $c->toHex()); // original object should not be altered!
-	}
+        $this->assertEquals('#78BD6E', $c->inverse()->toHex());
+        $this->assertEquals($hex, $c->toHex()); // original object should not be altered!
+    }
 }
