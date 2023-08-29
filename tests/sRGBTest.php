@@ -1,56 +1,59 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Danmichaelo\Coma;
 
-class sRGBTest extends \PHPUnit_Framework_TestCase
+use Exception;
+use PHPUnit\Framework\TestCase;
+
+class sRGBTest extends TestCase
 {
-    public function testFromToHex()
+    public function testFromToHex(): void
     {
         $hex = '#234567';
         $c = new sRGB($hex);
 
-        $this->assertEquals($hex, $c->toHex());
+        self::assertSame($hex, $c->toHex());
     }
 
-    public function testShortHex()
+    public function testShortHex(): void
     {
         $hex = '#222';
         $c = new sRGB($hex);
 
-        $this->assertEquals('#222222', $c->toHex());
+        self::assertSame('#222222', $c->toHex());
     }
 
-    /**
-     * @expectedException Exception
-     */
-    public function testInvalidHexColor1()
+    public function testInvalidHexColor1(): void
     {
+        self::expectException(Exception::class);
+
         $hex = '#2222';
-        $c = new sRGB($hex);
+        new sRGB($hex);
     }
 
-    public function testInvalidHexColor2()
+    public function testInvalidHexColor2(): void
     {
         $hex = '#HHHHHH';
         $c = new sRGB($hex);
 
-        $this->assertEquals('#000000', $c->toHex());
+        self::assertSame('#000000', $c->toHex());
     }
 
-    /**
-     * @expectedException Exception
-     */
-    public function testInvalidHexColor3()
+    public function testInvalidHexColor3(): void
     {
-        $c = new sRGB(300, 300, 300);
+        self::expectException(Exception::class);
+
+        new sRGB(300, 300, 300);
     }
 
-    public function testInverse()
+    public function testInverse(): void
     {
         $hex = '#874291';
         $c = new sRGB($hex);
 
-        $this->assertEquals('#78BD6E', $c->inverse()->toHex());
-        $this->assertEquals($hex, $c->toHex()); // original object should not be altered!
+        self::assertSame('#78BD6E', $c->inverse()->toHex());
+        self::assertSame($hex, $c->toHex()); // original object should not be altered!
     }
 }
