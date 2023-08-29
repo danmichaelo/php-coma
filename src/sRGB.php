@@ -1,45 +1,63 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Danmichaelo\Coma;
+
+use Exception;
+
+use function dechex;
+use function hexdec;
+use function is_null;
+use function is_numeric;
+use function is_string;
+use function pow;
+use function str_pad;
+use function str_replace;
+use function strlen;
+use function strtoupper;
+use function substr;
 
 class sRGB
 {
     /**
      * Red value in range 0,255.
+     *
      */
-    public $r;
+    public int $r;
 
     /**
      * Green value in range 0,255.
      */
-    public $g;
+    public int $g;
 
     /**
      * Blue value in range 0,255.
      */
-    public $b;
+    public int $b;
 
-    public function __construct($r, $g = null, $b = null)
+    public function __construct(int|string $r, ?int $g = null, ?int $b = null)
     {
-        if (is_null($g) && is_null($b)) {
+        if (is_string($r) && is_null($g) && is_null($b)) {
             $this->fromHex($r);
         } else {
             if (!is_numeric($r) || $r < 0 || $r > 255) {
-                throw new \Exception('red out of range');
+                throw new Exception('red out of range');
             }
             if (!is_numeric($g) || $g < 0 || $g > 255) {
-                throw new \Exception('green out of range');
+                throw new Exception('green out of range');
             }
             if (!is_numeric($b) || $b < 0 || $b > 255) {
-                throw new \Exception('blue out of range');
+                throw new Exception('blue out of range');
             }
-            $this->r = $r;
-            $this->g = $g;
-            $this->b = $b;
+
+            $this->r = (int) $r;
+            $this->g = (int) $g;
+            $this->b = (int) $b;
         }
     }
 
-    protected function pivot($n)
+    protected function pivot(float $n): float
     {
         return ($n > 0.04045)
             ? pow(($n + 0.055) / (1 + 0.055), 2.4)
@@ -50,15 +68,15 @@ class sRGB
      * The reverse transformation (sRGB to CIE XYZ)
      * https://en.wikipedia.org/wiki/SRGB.
      */
-    public function toXyz()
+    public function toXyz(): XYZ
     {
 
         // Reverse transform from sRGB to XYZ:
-        $color = array(
+        $color = [
             $this->pivot($this->r / 255),
             $this->pivot($this->g / 255),
             $this->pivot($this->b / 255),
-        );
+        ];
 
         // Observer = 2°, Illuminant = D65
         return new XYZ(
@@ -68,7 +86,7 @@ class sRGB
         );
     }
 
-    public function toLab()
+    public function toLab(): Lab
     {
         // Reverse transform from sRGB to XYZ
         $xyz = $this->toXyz();
@@ -77,7 +95,7 @@ class sRGB
         return $xyz->toLab();
     }
 
-    public function toHex()
+    public function toHex(): string
     {
         $hex = '#';
         $hex .= strtoupper(str_pad(dechex($this->r), 2, '0', STR_PAD_LEFT));
@@ -87,27 +105,27 @@ class sRGB
         return $hex;
     }
 
-    protected function fromHex($hex)
+    protected function fromHex(string $hex): void
     {
         $hex = str_replace('#', '', $hex);
 
         if (strlen($hex) == 3) {
-            $this->r = hexdec(substr($hex, 0, 1).substr($hex, 0, 1));
-            $this->g = hexdec(substr($hex, 1, 1).substr($hex, 1, 1));
-            $this->b = hexdec(substr($hex, 2, 1).substr($hex, 2, 1));
+            $this->r = (int) @hexdec(substr($hex, 0, 1) . substr($hex, 0, 1));
+            $this->g = (int) @hexdec(substr($hex, 1, 1) . substr($hex, 1, 1));
+            $this->b = (int) @hexdec(substr($hex, 2, 1) . substr($hex, 2, 1));
         } elseif (strlen($hex) == 6) {
-            $this->r = hexdec(substr($hex, 0, 2));
-            $this->g = hexdec(substr($hex, 2, 2));
-            $this->b = hexdec(substr($hex, 4, 2));
+            $this->r = (int) @hexdec(substr($hex, 0, 2));
+            $this->g = (int) @hexdec(substr($hex, 2, 2));
+            $this->b = (int) @hexdec(substr($hex, 4, 2));
         } else {
-            throw new \Exception('Invalid hex color code length');
+            throw new Exception('Invalid hex color code length');
         }
     }
 
     /**
      * Returns the inverse of the current color.
      */
-    public function inverse()
+    public function inverse(): self
     {
         return new self(255 - $this->r, 255 - $this->g, 255 - $this->b);
     }

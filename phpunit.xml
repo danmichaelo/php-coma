@@ -1,13 +1,8 @@
-<phpunit 
-  colors="true"
-  bootstrap="vendor/autoload.php"
-  verbose="true"
-  stopOnFailure="true">
-
-    <testsuites>
-            <testsuite name="TestSuite">
-                    <directory>tests/</directory>
-            </testsuite>
-    </testsuites>
-
+<?xml version="1.0"?>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true" bootstrap="vendor/autoload.php" stopOnFailure="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.2/phpunit.xsd" cacheDirectory=".phpunit.cache">
+  <testsuites>
+    <testsuite name="TestSuite">
+      <directory>tests</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

@@ -9,8 +9,7 @@ CoMa – PHP Color Math Library
 Php library to convert between [sRGB](//en.wikipedia.org/wiki/SRGB), [XYZ](//en.wikipedia.org/wiki/XYZ_color_space), and [Lab](//en.wikipedia.org/wiki/Lab_color_space) color spaces, and calculate various [color distance metrics](//en.wikipedia.org/wiki/Color_difference) (delta E). Currently CIE76 and CIE94 are implemented, but I plan to implement more.
 
 ```php
-use Danmichaelo\Coma\ColorDistance,
-	Danmichaelo\Coma\sRGB;
+use Danmichaelo\Coma\ColorDistance;use Danmichaelo\Coma\sRGB;
 
 $color1 = new sRGB(1, 5, 250);
 $color2 = new sRGB(0, 0, 208);

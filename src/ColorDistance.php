@@ -1,6 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Danmichaelo\Coma;
+
+use Exception;
+
+use function sqrt;
 
 /**
  * References used:
@@ -12,15 +18,21 @@ namespace Danmichaelo\Coma;
  */
 class ColorDistance
 {
-    protected function toLab($color)
+    protected function toLab(mixed $color): Lab
     {
         if ($color instanceof Lab) {
             return $color;
         }
+
+        if ($color instanceof XYZ) {
+            return $color->toLab();
+        }
+
         if ($color instanceof sRGB) {
             return $color->toLab();
         }
-        throw new \Exception('color of unknown class');
+
+        throw new Exception('color of unknown class');
         // Finnes det noe ala InvalidArgumentException?
     }
 
@@ -32,7 +44,7 @@ class ColorDistance
      * 2. convert sRGB colors to L*a*b*
      * 3. compute deltaE between your two L*a*b* values.
      */
-    public function cie76($color1, $color2)
+    public function cie76(mixed $color1, mixed $color2): float
     {
         $f1 = $this->toLab($color1);
         $f2 = $this->toLab($color2);
@@ -50,7 +62,7 @@ class ColorDistance
      * DeltaE calculation using the CIE94 formula.
      * Delta = 2.3 corresponds to a just noticeable difference.
      */
-    public function cie94($color1, $color2)
+    public function cie94(mixed $color1, mixed $color2): float
     {
         $Kl = 1.0;
         $K1 = .045;
@@ -89,7 +101,7 @@ class ColorDistance
     /**
      * Not very useful, but interesting to compare.
      */
-    public function simpleRgbDistance($color1, $color2)
+    public function simpleRgbDistance(sRGB $color1, sRGB $color2): float
     {
         $deltaR = ($color2->r - $color1->r) / 255;
         $deltaG = ($color2->g - $color1->g) / 255;
