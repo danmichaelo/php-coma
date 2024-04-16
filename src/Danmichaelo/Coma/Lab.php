@@ -6,7 +6,7 @@ class Lab
 {
     public $l;
     public $a;
-    public $n;
+    public $b;
 
     public function __construct($l, $a, $b)
     {
