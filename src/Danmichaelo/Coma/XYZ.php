@@ -7,6 +7,7 @@ class XYZ
     public $x;
     public $y;
     public $z;
+    private $white;
 
     public function __construct($x, $y, $z)
     {
